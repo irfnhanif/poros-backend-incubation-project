@@ -37,7 +37,24 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.findAll = (req, res) => {};
+exports.findAll = (req, res) => {
+  const book = Number(req.params);
+  if (book !== undefined){
+    res.status(200).json({
+      success: true,
+      data:{
+        book,
+      },
+    })
+  }
+  const response = res.response({
+    success : false,
+    message: "Daftar Buku kosong",
+  });
+  response.code(404);
+  return response;
+};
+
 
 exports.update = async (req, res) => {
   const bookId = Number(req.params.id);
