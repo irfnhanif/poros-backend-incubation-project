@@ -14,12 +14,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-const books = require("./book.model");
+const Book = require("./book.model");
 
 const db = {
   Sequelize: Sequelize,
   sequelize: sequelize,
-  books: books,
+  Book: Book,
 };
 
 module.exports = db;
