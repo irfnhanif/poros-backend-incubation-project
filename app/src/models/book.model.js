@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.STRING,
     },
     author: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
     },
     publisher: {
       type: DataTypes.STRING,
