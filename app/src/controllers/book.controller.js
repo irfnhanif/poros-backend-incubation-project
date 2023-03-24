@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Book = require("../models/book.model");
 
 exports.create = async (req, res) => {
@@ -75,4 +76,27 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.delete = (req, res) => {};
+exports.delete = async (req, res) => {
+  const bookId = Number(req.params.id);
+  const book = await Book.findByPk(bookId);
+
+  if (!book) {
+    res.status(404).json({
+      success: false,
+      message: "Buku tidak ditemukan!",
+    });
+  }
+
+  try {
+    await Book.destroy({ where: { id: bookId } });
+    res.status(200).json({
+      success: true,
+      message: "Buku berhasil dihapus!",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
