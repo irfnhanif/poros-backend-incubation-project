@@ -1,13 +1,14 @@
 const { Router } = require("express");
+const bookController = require("../controllers/book.controller")
 
 const router = Router();
 
-router.get("/", (req, res) => {});
+router.get("/", bookController.findAll);
 
-router.post("/", (req, res) => {});
+router.post("/", bookController.create);
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", bookController.update);
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", bookController.delete);
 
 module.exports = router;
