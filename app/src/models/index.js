@@ -14,12 +14,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-const Book = require("./book.model");
-
 const db = {
   Sequelize: Sequelize,
   sequelize: sequelize,
-  Book: Book,
 };
 
 module.exports = db;
