@@ -1,24 +1,44 @@
+const Joi = require("joi");
 const { where } = require("sequelize");
 const Book = require("../models/book.model");
 
 exports.create = async (req, res) => {
   if (!req.body || !req.body.title) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: "Judul tidak boleh kosong!",
     });
   }
 
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    genre: Joi.string(),
+    author: Joi.string(),
+    publisher: Joi.string(),
+    yearPublished: Joi.number(),
+    totalPage: Joi.number(),
+    currentPage: Joi.number(),
+  });
+
+  const { error, value } = schema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.details[0].message,
+    });
+  }
+
   const book = {
-    title: req.body.title,
-    genre: req.body.genre,
-    author: req.body.author,
-    publisher: req.body.publisher,
-    yearPublished: Number(req.body.yearPublished),
-    totalPage: Number(req.body.totalPage),
-    currentPage: Number(req.body.currentPage),
+    title: value.title,
+    genre: value.genre,
+    author: value.author,
+    publisher: value.publisher,
+    yearPublished: Number(value.yearPublished),
+    totalPage: Number(value.totalPage),
+    currentPage: Number(value.currentPage),
     bookStatus:
-      Number(req.body.currentPage) === Number(req.body.totalPage)
+      Number(value.currentPage) === Number(value.totalPage)
         ? "Selesai dibaca"
         : "Sedang dibaca",
   };
@@ -41,7 +61,7 @@ exports.findAll = async (req, res) => {
   const books = await Book.findAll();
 
   if (books.length === 0) {
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       message: "Tidak ada buku!",
     });
@@ -66,7 +86,7 @@ exports.update = async (req, res) => {
   const book = await Book.findByPk(bookId);
 
   if (!book) {
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       message: "Buku tidak ditemukan!",
     });
@@ -109,7 +129,7 @@ exports.delete = async (req, res) => {
   const book = await Book.findByPk(bookId);
 
   if (!book) {
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       message: "Buku tidak ditemukan!",
     });
