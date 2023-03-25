@@ -5,6 +5,14 @@
 2. Ndaniel Mahulae (BE)
 3. Hilmisyah Nabil (FE)
 
+## Endpoints
+Metode | Rute
+--- | ---
+GET | http://localhost:3000/api/books
+POST | http://localhost:3000/api/books
+PUT | http://localhost:3000/api/books/:id
+DELETE | http://localhost:3000/api/books/:id
+
 *NB: Semua perintah di bawah dilakukan pada direktori root dari proyek*
 
 ## Docker
