@@ -1,4 +1,5 @@
 # Proyek Inkubasi Backend POROS Kelompok 2
+
 **Kelompok 2:**
 1. Irfan Hanif Habibi (BE)
 2. Ndaniel Mahulae (BE)
@@ -6,6 +7,7 @@
 
 *NB: Semua perintah di bawah dilakukan pada direktori root dari proyek*
 
+## Docker
 1. Membuat Image Aplikasi Node.js
 ```
 docker build . -t <username-anda>/poros-backend-incubation-project
@@ -24,6 +26,18 @@ docker run -d \
 3. Membuat Kontainer Aplikasi Node.js dari Image
 ``` 
 docker run -dp 3000:3000 --network bookshelf <username-anda>/poros-backend-incubation-project
+```
+
+## Docker Compose
+
+1. Membuat Kontainer Dengan Docker Compose
+``` 
+docker compose up -d
+```
+
+2. Menghapus Kontainer Beserta Volumenya
+``` 
+docker compose down --volumes
 ```
 
 
