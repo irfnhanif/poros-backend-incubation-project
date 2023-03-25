@@ -1,9 +1,10 @@
 module.exports = {
-  HOST: "172.19.0.2",
+  HOST: "mysql",
   USER: "root",
   PASSWORD: "secret",
   DB: "books",
   dialect: "mysql",
+  timezone: "+07:00",
   pool: {
     max: 5,
     min: 0,
