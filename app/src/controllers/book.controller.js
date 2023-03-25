@@ -37,22 +37,28 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.findAll = (req, res) => {
-  const book = Number(req.params);
-  if (book !== undefined){
+exports.findAll = async (req, res) => {
+  const books = await Book.findAll()
+
+  if (!books) {
+    res.status(404).json({
+      success: false,
+      message: "Tidak ada buku!",
+    });
+  }
+
+  try {
     res.status(200).json({
       success: true,
-      data:{
-        book,
-      },
-    })
+      message: "Berhasil mendapatkan buku!",
+      data: books
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-  const response = res.response({
-    success : false,
-    message: "Daftar Buku kosong",
-  });
-  response.code(404);
-  return response;
 };
 
 
@@ -69,6 +75,7 @@ exports.update = async (req, res) => {
 
   try {
     const keys = Object.keys(req.body);
+
     keys.forEach((key) => {
       if (
         key === "yearPublished" ||
@@ -80,6 +87,11 @@ exports.update = async (req, res) => {
         book[key] = req.body[key];
       }
     });
+
+    if (book["currentPage"] === book["totalPage"]) {
+      book["bookStatus"] = "Selesai dibaca";
+    }
+
     await book.save();
     res.status(200).json({
       success: true,
