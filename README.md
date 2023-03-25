@@ -13,15 +13,20 @@ POST | http://localhost:3000/api/books
 PUT | http://localhost:3000/api/books/:id
 DELETE | http://localhost:3000/api/books/:id
 
-*NB: Semua perintah di bawah dilakukan pada direktori root dari proyek*
+*NB: Semua perintah di bawah dilakukan pada direktori root dari proyek dan jalankan kontainer database lalu kontainer aplikasi dengan jeda 10 detik*
 
 ## Docker
-1. Membuat Image Aplikasi Node.js
+1. Membuat *network* bookshelf
+```
+docker network create bookshelf
+```
+
+2. Membuat Image Aplikasi Node.js
 ```
 docker build . -t <username-anda>/poros-backend-incubation-project
 ```
 
-2. Membuat Kontainer Database MySQL
+3. Membuat Kontainer Database MySQL
 ```
 docker run -d \
      --network bookshelf --network-alias mysql \
@@ -31,7 +36,7 @@ docker run -d \
      mysql:8.0
 ```
 
-3. Membuat Kontainer Aplikasi Node.js dari Image
+4. Membuat Kontainer Aplikasi Node.js dari Image
 ``` 
 docker run -dp 3000:3000 --network bookshelf <username-anda>/poros-backend-incubation-project
 ```
