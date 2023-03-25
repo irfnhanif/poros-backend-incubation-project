@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - books-data:/var/lib/mysql
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: books
+    networks:
+      - bookshelf
+
+  app:
+    image: node:18-alpine
+    command: sh -c "sleep 10 && npm install && npm start"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: books
+    networks:
+      - bookshelf
+
+volumes:
+  books-data:
+
+networks:
+  bookshelf:
