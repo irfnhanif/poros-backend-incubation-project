@@ -38,29 +38,28 @@ exports.create = async (req, res) => {
 };
 
 exports.findAll = async (req, res) => {
-  const books = await Book.findAll()
+  const books = await Book.findAll();
 
-  if (!books) {
+  if (books.length === 0) {
     res.status(404).json({
       success: false,
       message: "Tidak ada buku!",
     });
-  }
-
-  try {
-    res.status(200).json({
-      success: true,
-      message: "Berhasil mendapatkan buku!",
-      data: books
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+  } else {
+    try {
+      res.status(200).json({
+        success: true,
+        message: "Berhasil mendapatkan buku!",
+        data: books,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
   }
 };
-
 
 exports.update = async (req, res) => {
   const bookId = Number(req.params.id);
