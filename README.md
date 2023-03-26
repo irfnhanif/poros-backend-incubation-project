@@ -15,10 +15,10 @@ DELETE | http://localhost:3000/api/books/:id
 
 ## API Documentation
 [Dokumentasi Postman](https://documenter.getpostman.com/view/25559847/2s93RNyunX)
-<br>
-*NB: Semua perintah di bawah dilakukan pada direktori root dari proyek dan jalankan kontainer database lalu kontainer aplikasi dengan jeda 10 detik*
 
 ## Docker
+*NB: Semua perintah di bawah dilakukan pada direktori root dari proyek dan jalankan kontainer database lalu kontainer aplikasi dengan jeda 10 detik*
+
 1. Membuat *network* bookshelf
 ```
 docker network create bookshelf
